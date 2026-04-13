@@ -1,13 +1,109 @@
 # ThesisProject
-In my thesis, we've studied star systems, and the relation between the orbital period (PERIOD) and rotational velocity at the equator (VBROAD). We've attempted to find the linear relation between the two variables, but our population depicted a very larger scatter in the data, as seen in 'Figures/scatter without solution.jpg'. Common robust method techinques were ineffectual in determining the actual slope of the densest are in the graph, hence we developed a novel MCMC algorithm which fits a 2D distribution with a 2D Gaussian to derive the slope of the data. 
 
-A comprehensive descroption of the algorithm can be found in this article: 'https://ui.adsabs.harvard.edu/abs/2025A%26A...701A.195H/abstract'. 
+## Overview
 
-Following is a descrioption of each file in the project: 
-1. 'EBs with vbroad on MS.csv' is the data file. It includes information about 1050 star systems, including the rotational velocity (VBROAD) & orbital periods (PERIOD), which are the main focus.
-2. 'global_variable.py' includes general functions & variables to create graphs, folders, etc., used throught the project. 
-3. 'Gaussin_Function_Fitting.py' is the algorithm's code. It accepts two data vectors (PERIOD and VBROAD) and fits them with a 2D Gaussian using MCMC method. The inclination of the Gaussian represents the linear relation between the variables. This file also generates the relevant graphs (distribution of the MCMC parameters chain, corner plot, etc.). These graphs are available in 'Figures/depth ratio below 0.7 temperature in 5600 8000 rad in 1.25 3'. Also, shows the original population, fitted with the 2D Gaussian. This is shown in 'Figures/scatter with solution.pdf'.
-4. 'Activate_Gaussian_Function.py' filters the initial population (based on radii, temperature, etc.) and calls 'Gaussian_Function_Fitting.py'. It also geneates several plots that were used by the study, but are discarded from this repository.
-5. 'Figures/MCMC figures' provides the MCMC plots: corner plot, log chain and distribution of the parameters. 'SI hist.jpg' is the distribution of the linear fit parameters (slope & inclination) derived by the algorithm.
-   
+This project investigates stellar systems, focusing on the relationship between **orbital period (PERIOD)** and **equatorial rotational velocity (VBROAD)**.
 
+Initial attempts to model a linear relationship between these variables revealed significant scatter in the data (see `Figures/scatter without solution.jpg`). Standard robust fitting techniques were insufficient to accurately determine the slope of the densest region in the distribution.
+
+To address this, we developed a novel **Markov Chain Monte Carlo (MCMC)**-based algorithm that fits a **2D Gaussian distribution** to the data. The inclination of the fitted Gaussian provides an estimate of the underlying linear relationship between the variables.
+
+A detailed description of the algorithm can be found in the following publication:
+https://ui.adsabs.harvard.edu/abs/2025A%26A...701A.195H/abstract
+
+---
+
+## Project Structure
+
+### Data
+
+* **`EBs with vbroad on MS.csv`**
+  Contains data for 1050 stellar systems, including:
+
+  * Orbital period (`PERIOD`)
+  * Rotational velocity (`VBROAD`)
+
+---
+
+### Core Modules
+
+* **`global_variable.py`**
+  Contains shared functions and global variables used across the project, including utilities for plotting and directory management.
+
+* **`Gaussian_Function_Fitting.py`**
+  Implements the core algorithm:
+
+  * Accepts `PERIOD` and `VBROAD` as input vectors
+  * Fits a 2D Gaussian using an MCMC approach
+  * Extracts the slope from the Gaussian inclination
+  * Generates diagnostic plots:
+
+    * MCMC parameter chains
+    * Corner plots
+    * Fitted distribution vs. data
+
+  Output figures are stored in:
+  `Figures/MCMC plots`
+
+  The final fitted result is shown in:
+  `Figures/scatter with solution.pdf`
+
+---
+
+* **`Activate_Gaussian_Function.py`**
+
+  * Applies filters to the dataset (e.g., radius, temperature constraints)
+  * Calls the Gaussian fitting module
+  * Generates additional plots used during the study (not all included in this repository)
+
+---
+
+### Figures
+
+* **`Figures/MCMC figures`**
+  Contains MCMC diagnostic plots:
+
+  * Corner plots
+  * Log chains
+  * Parameter distributions
+
+* **`Figures/SI hist.jpg`**
+  Displays the distribution of the fitted linear parameters (slope and inclination).
+
+---
+
+## Key Idea
+
+Instead of directly fitting a line to noisy, highly scattered data, this project models the **density distribution** of the data using a 2D Gaussian. The orientation of this distribution provides a more robust estimate of the underlying linear relationship.
+
+---
+
+## Requirements
+
+* Python 3.x
+* NumPy
+* SciPy
+* Matplotlib
+* emcee (for MCMC)
+* corner (for visualization)
+
+---
+
+## Usage
+
+1. Prepare the dataset (`EBs with vbroad on MS.csv`)
+2. Run:
+
+   ```
+   Activate_Gaussian_Function.py
+   ```
+3. Outputs (plots and fitted results) will be saved in the `Figures/` directory.
+
+---
+
+## Notes
+
+* Some plots generated during the research phase are not included in this repository.
+* File and folder names reflect the original research workflow and may be verbose.
+
+---
